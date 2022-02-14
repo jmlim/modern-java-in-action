@@ -2,6 +2,11 @@ plugins {
     id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'me.champeau.jmh' version "0.6.2"
+}
+
+wrapper {
+    gradleVersion = '6.8.3'
 }
 
 group = 'io.jmlim'
@@ -20,3 +25,10 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+/*
+
+jmh {
+    fork = 1
+    warmupIterations = 1
+    iterations = 1
+}*/
