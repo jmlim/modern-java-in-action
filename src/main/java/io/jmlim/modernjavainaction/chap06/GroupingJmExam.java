@@ -106,5 +106,26 @@ public class GroupingJmExam {
                         }, toCollection(HashSet::new)))
         );
         System.out.println(caloricLevelsByType2);
+
+        // 파티셔닝 (채식과 채직이 아닌 요리로 분류)
+        Map<Boolean, List<Dish>> partitionedMenu = menu.stream()
+                .collect(partitioningBy(Dish::isVegetarian)); // 분할 함수
+
+        System.out.println(partitionedMenu);
+
+        // 채식 요리 와 채식이 아닌 요리 각각의 그룹에서 칼로리가 가장 높은 요리 찾기.
+        Map<Boolean, Dish> mostCaloricPartitionedByVegetarian = menu.stream()
+                .collect(partitioningBy(Dish::isVegetarian, collectingAndThen(maxBy(comparingInt(Dish::getCalories)), Optional::get)));
+        System.out.println(mostCaloricPartitionedByVegetarian);
+
+
+        // 다수준 분할
+        Map<Boolean, Map<Boolean, List<Dish>>>
+        VegetarianFoodWithOver500Calories = menu.stream().collect(partitioningBy(Dish::isVegetarian,
+                partitioningBy(d -> d.getCalories() > 500)));
+        System.out.println(VegetarianFoodWithOver500Calories);
+
+        Map<Boolean, Long> vegetarianCnt = menu.stream().collect(partitioningBy(Dish::isVegetarian, counting()));
+        System.out.println(vegetarianCnt);
     }
 }
